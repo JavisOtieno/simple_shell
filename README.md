@@ -1,72 +1,105 @@
-ALX - Simple Unix Like Shell
-===========================
-     C programming with ALX School!
-================================================================================
+# 0x16. C - Simple Shell
 
-## Description:
-    
-The implementation of a simple shell. The shell is an interactive interface that allows users to execute other commands and utilities in Linux and other UNIX-based operating systems. Shells use either a command-line interface or graphical user interface, depending on a computer's role and particular operation.
+```sh
+     _____       _                     __    _____ _          _ _ 
+    / ____|     | |                   / _|  / ____| |        | | |
+   | |  __  __ _| |_ ___  ___    ___ | |_  | (___ | |__   ___| | |
+   | | |_ |/ _` | __/ _ \/ __|  / _ \|  _|  \___ \| '_ \ / _ \ | |
+   | |__| | (_| | ||  __/\__ \ | (_) | |    ____) | | | |  __/ | |
+    \_____|\__,_|\__\___||___/  \___/|_|   |_____/|_| |_|\___|_|_|
+```
 
-## Installation:
+<details>
+<summary>The Gates of Shell by Spencer Cheng, featuring Julien Barbier</summary>
+<img src="https://user-images.githubusercontent.com/29776892/129798799-6f730688-8728-49ed-b01b-13bec0fa2896.jpeg">
+</details>
 
-- clone the repository
+## Resource
 
-     https://github.com/sertsev/simple_shell
+- [Unix shell](https://en.wikipedia.org/wiki/Unix_shell)
+- [Thompson shell](https://en.wikipedia.org/wiki/Thompson_shell)
+- [Ken Thompson](https://en.wikipedia.org/wiki/Ken_Thompson)
+- [Everything you need to know to start coding your own shell](https://www.notion.so/C-Programming-f13cdb9661db464f8ea326c5a2654e8e)
 
-- compile with
+---
 
-     gcc -Wall -Werror -Wextra -pedantic *.c -o tsh
+<details>
+<summary>List of allowed functions and system calls</summary>
 
++ `access` (man 2 access)
++ `chdir` (man 2 chdir)
++ `close` (man 2 close)
++ `closedir` (man 3 closedir)
++ `execve` (man 2 execve)
++ `exit` (man 3 exit)
++ `\_exit` (man 2 \_exit)
++ `fflush` (man 3 fflush)
++ `fork` (man 2 fork)
++ `free`(man 3 free)
++ `getcwd` (man 3 getcwd)
++ `getline` (man 3 getline)
++ `getpid` (man 2 getpid)
++ `isatty` (man 3 isatty)
++ `kill` (man 2 kill)
++ `malloc` (man 3 malloc)
++ `open` (man 2 open)
++ `opendir` (man 3 opendir)
++ `perror` (man 3 perror)
++ `read` (man 2 read)
++ `readdir` (man 3 readdir)
++ `signal` (man 2 signal)
++ `stat` (\_\_xstat) (man 2 stat)
++ `lstat` (\_\_lxstat) (man 2 lstat)
++ `fstat` (\_\_fxstat) (man 2 fstat)
++ `strtok` (man 3 strtok)
++ `wait` (man 2 wait)
++ `waitpid` (man 2 waitpid)
++ `wait3` (man 2 wait3)
++ `wait4` (man 2 wait4)
++ `write` (man 2 write)
 
-## Example:
+</details>
 
-     ubuntu@ubuntu$ ./hsh     
-     $ pwd
-     /home/ubuntu/simple_shell
-     $ /bin/pwd
-     /home/ubuntu/simple_shell
-     $ ls -la
-     -rw-rw-r-- 1 vagrant vagrant  bytes <date> builtins.c
-     -rw-rw-r-- 1 vagrant vagrant   bytes <date> shell.h
+<details>
+<summary>The shell will be compiled this way:</summary>
+<pre>$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 \*.c -o hsh</pre>
+</details>
 
-## Builtins commands:
+## Output
 
-     exit: exits a shell
-     
-     env: show/displays environment variables
-     
-## Special Features:
+- Unless specified otherwise, your program must have the exact same output as `sh` (`/bin/sh`) as well as the exact same error output.
+- The only difference is when you print an error, the name of the program must be equivalent to your `argv[0]` (see below)
 
-     Ctrl + C: To prevent the killing of the simple-shell
-     
-     Ctrl + D: exit the simple-shell
+<details>
+     <summary>Example of error with sh:</summary>
+<pre>$ echo "qwerty" | /bin/sh<br>/bin/sh: 1: qwerty: not found<br>$ echo "qwerty" | /bin/../bin/sh<br>/bin/../bin/sh: 1: qwerty: not found<br>$</pre>
+</details>
 
-## Files:
+<details>
+<summary>Same error with your program hsh:</summary>
+<pre>$ echo "qwerty" | ./hsh<br>./hsh: 1: qwerty: not found<br>$ echo "qwerty" | ./././hsh<br>./././hsh: 1: qwerty: not found<br>$</pre>
+</details>
 
-     simishell.h: This file contains all the prototypes used for our shell project.
+## Testing
 
-     AUTHORS: This file contains all the contributors to this repository.
+<details>
+<summary>The shell should work like this in interactive mode:</summary>
+<pre>$ ./hsh<br>($) /bin/ls<br>hsh main.c shell.c<br>($)<br>($) exit<br>$</pre>
+</details>
 
-     README.md: This file contains this readme text.
+<details>
+<summary>But also in non-interactive mode:</summary>
+<pre>$ echo "/bin/ls" | ./hsh<br>hsh main.c shell.c test\_ls\_2<br>$<br>$ cat test\_ls\_2<br>/bin/ls<br>/bin/ls<br>$<br>$ cat test\_ls\_2 | ./hsh<br>hsh main.c shell.c test\_ls\_2<br>hsh main.c shell.c test\_ls\_2<br>$</pre>
+</details>
 
-     man_1_simple_shell: The man page for our shell.
-     
-     simpleshell.c: This file contain main function of the shell to excute and launch the shell.
-     
-     unnecessary.c: This file contains all the customization functions.
-     
-     shellprocessor.c: This file contains the shell processing and function selector functions.
+## Features
 
-     builtin.c: This file contains the code for the builtin functions of code.
+- To add as we progress
 
-     utility.c: This file contains helper functions.
-     
-    
-## WARNING:
+## Builtins
 
-The work is still in progress, and a lot of things like aliases and piping, redirection,... are not available.
-
+- To add as we progress
 
 ## Authors
 
-* [**Sertsedengle Shewandagn**](https://github.com/sertsev)
+- iAmG-r00t 👾
